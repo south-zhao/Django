@@ -1,0 +1,47 @@
+{% extends 'water_system/index.html' %}
+{% block head %}
+<title>个人信息</title>
+{% endblock %}
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+                <div class="panel panel-default">
+                  <div class="panel-heading">我的信息</div>
+                  <div class="panel-body">
+                      {% if user2 %}
+                      <form class="form-horizontal">
+                          <div class="form-group">
+                            <label class="col-sm-2 control-label">用户名</label>
+                            <div class="col-sm-10">
+                              <p class="form-control-static">{{ user2.name }}</p>
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label class="col-sm-2 control-label">电话</label>
+                            <div class="col-sm-10">
+                              <p class="form-control-static">{{ user2.tele }}</p>
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label class="col-sm-2 control-label">地址</label>
+                            <div class="col-sm-10">
+                              <p class="form-control-static">{{ user2.addr }}</p>
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label class="col-sm-2 control-label">水的种类</label>
+                            <div class="col-sm-10">
+                              <p class="form-control-static">{{ user2.wid }}</p>
+                            </div>
+                          </div>
+                        </form>
+                      {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+    </div>
+{% endblock %}

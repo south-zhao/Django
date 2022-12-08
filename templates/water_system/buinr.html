@@ -1,0 +1,124 @@
+{% extends 'water_system/index.html' %}
+{% block head %}
+<title>查询</title>
+{% endblock %}
+{% block content %}
+   <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+                <div class="panel panel-default">
+                  <div class="panel-heading">查询</div>
+                  <div class="panel-body">
+                      <form class="form-inline" action="" method="get">
+                          {% csrf_token %}
+                            <div class="form-group">
+                            <label for="exampleInputName2">用户</label>
+                               <select name="us">
+                                    <option value="0" name="us">请选择用户</option>
+                                    {% for i, j in na %}
+                                    {% if i == us %}
+                                         <option value="{{ i }}" name="us" selected="selected">{{ j }}</option>
+                                    {% else %}
+                                        <option value="{{ i }}" name="us">{{ j }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                                </select>
+                          </div>
+                          <div class="form-group">
+                            <label for="exampleInputName2">年份</label>
+                               <select name="year">
+                                    <option name="year" value="0">请选择年份</option>
+                                {% for i in ye %}
+                                    {% if i == year %}
+                                         <option value="{{ i }}" name="year" selected="selected">{{ i }}</option>
+                                    {% else %}
+                                        <option value="{{ i }}" name="year">{{ i }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                                </select>
+                          </div>
+                          <div class="form-group">
+                            <label for="exampleInputEmail2">月份</label>
+                            <select name="month">
+                                <option name="month" value="0">请选择月份</option>
+                            {% for i in ase %}
+                                {% if i == month %}
+                                     <option value="{{ i }}" name="month" selected="selected">{{ i }}</option>
+                                {% else %}
+                                    <option value="{{ i }}" name="month">{{ i }}</option>
+                                {% endif %}
+                            {% endfor %}
+                            </select>
+                          </div>
+                           <div class="form-group">
+                            <label for="exampleInputEmail2">种类</label>
+                            <select name="typ">
+                                <option name="typ" value="0">请选择种类</option>
+                            {% for i, j in water1 %}
+                                {% if i == typ %}
+                                     <option value="{{ i }}" name="typ" selected="selected">{{ j }}</option>
+                                {% else %}
+                                    <option value="{{ i }}" name="typ">{{ j }}</option>
+                                {% endif %}
+                            {% endfor %}
+                            </select>
+                          </div>
+                          <button type="submit" class="btn btn-default">查询</button>
+                          <button class="btn btn-default"><a href="/out/?year={{ year }}&month={{ month }}&typ={{ typ }}">导出</a></button>
+                        </form>
+                          <table class="table">
+                            <tr>
+                               <td>姓名</td>
+                                <td>数量</td>
+                                <td>种类</td>
+                                <td>种类编号</td>
+                                <td>花费(/元)</td>
+                                <td>送水员</td>
+                                <td>电话</td>
+                                <td>时间</td>
+                            </tr>
+                          {% for p in page %}
+                            <tr>
+                            <td>{{ p.c_name }}</td>
+                            <td>{{ p.num }}</td>
+                            <td>{{ p.record.kind.type }}</td>
+                            <td>{{ p.record.kind.wid }}</td>
+                            <td>{{ p.record.money }}</td>
+                            <td>{{ p.name }}</td>
+                            <td>{{ p.tele }}</td>
+                            <td>{{ p.time| date:'Y-m-d h:i:s' }}</td>
+                            </tr>
+                        {% endfor %}
+                      </table>
+                    </div>
+                    <div class="panel-footer">
+                          {% if page.has_previous %}
+                            {# 得到上一页的页码编号 #}
+                              <button><a href="/buinr/?us={{ us }}&page={{ page.previous_page_number }}&year={{ year }}&month={{ month }}&typ={{ typ }}">上一页</a></button>
+                            {% else %}
+                            <button>上一页</button>
+                            {% endif %}
+                            {# 在页面范围内循环选择一个页面号码 #}
+                            {% for p in paginator.page_range %}
+                            {# 如果页面编号等于当前页码序号 #}
+                                {% if p == page.number %}
+                                    <button>{{ p }}</button>
+                                {% else %}
+                                     {# 否则跳转到页码相对应的页面 #}
+                                    <button><a href="/buinr/?us={{ us }}&page={{ p }}&year={{ year }}&month={{ month }}&typ={{ typ }}">{{ p }}</a></button>
+                                {% endif %}
+                            {% endfor %}
+                            {% if page.has_next %}
+                              <button><a href="/buinr/?us={{ us }}&page={{ page.next_page_number }}&year={{ year }}&month={{ month }}&typ={{ typ }}">下一页</a></button>
+                            {% else %}
+                            <button>下一页</button>
+                            {% endif %}
+                          </div>
+                </div>
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+    </div>
+{% endblock %}
+

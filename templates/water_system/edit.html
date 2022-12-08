@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>个人信息</title>
+     {% load static %}
+    <link rel="stylesheet" href="{% static 'bootstrap-3.4.1-dist/css/bootstrap.min.css'%}">
+    <script src="{% static 'js/jquery_3.6.0.js' %}"></script>
+    <script src="{% static 'bootstrap-3.4.1-dist/js/bootstrap.min.js'%}"></script>
+</head>
+<body>
+<h1 class="text-center">编辑</h1>
+<div class="row">
+    <div class="col-md-8 col-md-offset-2">
+        <form action="" method="post">
+            <p>用户名:{{ user1.name }}</p>
+            <p>电话:
+                <input type="text" name="tele" class="form-control"
+                  value="{{ user1.tele }}">
+            </p>
+            <p>地址:
+                <select name="typea">
+                    {% if user1.addr is NULL %}
+                        <option>选择区</option>
+                    {% endif %}
+                    {% for i in area %}
+                        {% if i.area != user1.work_id %}
+                            <option value="{{ i.addr }}" name="typea">{{ i.addr }}</option>
+                        {% else %}
+                            <option value="{{ i.addr }}" name="typea" selected="selected">{{ i.addr }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+                <input type="text" name="addr" class="form-control"
+                  value="{{ user1.addr|slice:'6:' }}" size="30">
+            </p>
+            <p>种类:
+                <select name="type">
+                    {% if user1.addr is NULL %}
+                        <option>选择水的品牌</option>
+                    {% endif %}
+                    {% for i in water %}
+                        {% if i.wid != user1.wid.wid %}
+                            <option value="{{ i.wid }}" name="type">{{ i.type }}</option>
+                        {% else %}
+                            <option value="{{ i.wid }}" name="type" selected="selected">{{ i.type }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            </p>
+            <input type="submit" class="btn btn-success btn-block" value="提交修改">
+        </form>
+    </div>
+</div>
+</body>
+</html>

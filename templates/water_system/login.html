@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+    {% load static %}
+<link rel="stylesheet" href="http://hovertree.com/texiao/css/22/css/hovertree_login.css" />
+<script src="{% static 'js/jquery_3.6.0.js' %}"></script>
+<script src="{% static 'bootstrap-3.4.1-dist/js/bootstrap.min.js' %}"></script>
+<title>送水系统登录页面</title>
+    <style>
+        #t {
+            margin-left: 30px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="header">
+<div class="header_title">
+<span class="title_con">送水系统</span>
+</div>
+</div>
+
+<div id="content">
+<center>
+<div class="con">
+<div class="con_title">
+<span class="con_title_sp">欢迎登录送水系统</span>
+</div>
+    <form action="/login" method="post">
+        {% csrf_token %}
+        <div class="con_panel">
+        <div class="con_input">
+        <span>用户名：</span><input type="text" name="username" placeholder="用户名/管理员" autofocus required />
+        </div>
+        <div class="con_input">
+        <span id="t">密    码：</span><input id="pwd"  type="password" name="password" placeholder="密码" required />
+        <img src="../../static/img/show.jpg" alt="" width="30" height="20">
+        </div>
+        <div class="con_select">
+        <input type="radio" name="us" id="hovertreetea" value="普通用户" checked/><label for="hovertreetea">普通用户</label>
+        <input type="radio" name="us" id="hovertreeadm" value="管理员"/><label for="hovertreeadm">管理员</label>
+        </div>
+        <input type="submit" value="登 录" class="submit-btn"/>
+        </div>
+</form>
+</div>
+</center>
+</div>
+
+<div id="footer">
+© 技术支持：<a href="#">赵鑫杰</a>
+<br /><a href="http://hovertree.com/texiao/">更多信息</a>
+</div>
+<script>
+    $(function () {
+    // 通过点击事件实现密码的显示或隐藏功能
+    $("#pwd").next().click(function () {
+        // 通过id选择器获取当前输入框的属性
+        var type = $("#pwd").attr("type");
+        /**
+         * 若当前属性为“password”,则切换图片，并修改属性为“text”，实现密码的显示功能
+         * 若当前属性为“text"，同样切换图片，并修改属性为”password",实现密码的再次隐藏功能
+         */
+        if(type === "password"){
+            $("#pwd").next().attr("src","../../static/img/hide.jpg");
+            $("#pwd").next().css({"width":"30", "height":"20"});
+            $("#pwd").prop("type", "text");
+        }else {
+            $("#pwd").next().attr("src","../../static/img/show.jpg");
+            $("#pwd").next().css({"width":"30", "height":"20"});
+            $("#pwd").prop("type", "password");
+        }
+    });
+});
+
+</script>
+</body>
+</html>

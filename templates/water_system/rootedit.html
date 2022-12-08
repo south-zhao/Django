@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'bootstrap-3.4.1-dist/css/bootstrap.min.css'%}">
+    <script src="{% static 'js/jquery_3.6.0.js' %}"></script>
+    <script src="{% static 'bootstrap-3.4.1-dist/js/bootstrap.min.js'%}"></script>
+</head>
+<body>
+<h1 class="text-center">编辑</h1>
+<div class="row">
+    <div class="col-md-8 col-md-offset-2">
+        <form action="" method="post">
+            <p>username:{{ edit_obj.name }}</p>
+            <p>password:
+                <input type="password" name="password" class="form-control"
+                  value="{{ edit_obj.name.password }}">
+            </p>
+            <p>tele:
+                <input type="text" name="tele" class="form-control"
+                  value="{{ edit_obj.tele }}">
+            </p>
+            <p>addr:
+                <input type="text" name="addr" class="form-control"
+                  value="{{ edit_obj.addr }}">
+            </p>
+            <p>num:
+                <input type="text" name="num" class="form-control"
+                  value="{{ edit_obj.num }}">
+            </p>
+            <p>wid:
+                <input type="text" name="wid" class="form-control"
+                  value="{{ edit_obj.wid.wid }}">
+            </p>
+            <p>work_id:
+                <input type="text" name="work_id" class="form-control"
+                  value="{{ edit_obj.work_id }}">
+            </p>
+            <input type="submit" class="btn btn-success btn-block">
+        </form>
+    </div>
+</div>
+</body>
+</html>

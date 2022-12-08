@@ -1,0 +1,55 @@
+{% extends 'water_system/index.html' %}
+{% block head %}
+    <title>用户信息</title>
+{% endblock %}
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+                <div class="panel panel-default">
+                  <!-- Default panel contents -->
+                  <div class="panel-heading">用户信息表</div>
+
+                  <!-- Table -->
+                  <table class="table">
+                        <tr>
+                            <td>姓名</td>
+                            <td>密码</td>
+                            <td>电话</td>
+                            <td>住址</td>
+                            <td>供水数</td>
+                            <td>水的种类</td>
+                            <td>水品牌</td>
+                            <td>送水区号</td>
+                            <td>action</td>
+                        </tr>
+                        {% for pa in information %}
+                        <tr>
+                            <td>{{ pa.name }}</td>
+                            <td>{{ pa.name.password }}</td>
+                            <td>{{ pa.tele }}</td>
+                            <td>{{ pa.addr }}</td>
+                            <td>{{ pa.num }}</td>
+                            <td>{{ pa.wid.wid }}</td>
+                            <td>{{ pa.wid }}</td>
+                            <td>{{ pa.work_id }}</td>
+                            <td>
+                                <a href="/rootedit/?user_id={{ pa.cid }}">编辑</a>
+                                <a href="/delete/?user_id={{ pa.cid }}" onclick="return deleteJob();">删除</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                  </table>
+                </div>
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+    </div>
+    <script>
+		function deleteJob()
+		{
+		     return confirm("确定要删除吗?");
+		}
+    </script>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends 'water_system/index.html' %}
+{% block head %}
+<title>仓库信息</title>
+{% endblock %}
+{% block content %}
+<div class="container-fluid">
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+                <div class="panel panel-default">
+                  <!-- Default panel contents -->
+                  <div class="panel-heading">供应商信息表</div>
+
+                  <!-- Table -->
+                  <table class="table">
+                        <tr>
+                            <td>仓库号</td>
+                            <td>供水编号</td>
+                            <td>供水种类</td>
+                            <td>剩余量</td>
+                        </tr>
+                      {% for pa in store %}
+                        <tr>
+                            <td>{{ pa.sid }}</td>
+                            <td>{{ pa.wid.wid }}</td>
+                            <td>{{ pa.wid.type }}</td>
+                            <td>{{ pa.sum }}</td>
+                        </tr>
+                      {% endfor %}
+                  </table>
+                </div>
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+    </div>
+{% endblock %}

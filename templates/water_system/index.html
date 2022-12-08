@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% block head %}
+    <title>主页</title>
+    {% endblock %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'bootstrap-3.4.1-dist/css/bootstrap.min.css' %}">
+    <script src="{% static 'js/jquery_3.6.0.js' %}"></script>
+    <script src="{% static 'bootstrap-3.4.1-dist/js/bootstrap.min.js' %}"></script>
+</head>
+<body>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">送水系统</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li><a href="/">主页 <span class="sr-only">(current)</span></a></li>
+                <li><a href="/water1">饮用水信息</a></li>
+                <li><a href="/store">仓库信息</a></li>
+                {% if root %}
+                    <li><a href="/information">用户信息</a></li>
+                    <li><a href="/loadout">导入进水表</a></li>
+                    <li><a href="/pic">报表分析</a></li>
+                    <li><a href="/buinr/?us=0&page=1&year=0&month=0&typ=0">查询</a></li>
+                {% endif %}
+                <li><a href="/provider">供应商信息</a></li>
+                <li><a href="http://www.cxy521.com/" target="_blank">公司简介</a></li>
+                {% if root is False %}
+                    <li><a href="/buin/?page=1&year=0&month=0&typ=0">购买详情</a></li>
+                {% endif %}
+            </ul>
+            {% if user1 is None and rt is None %}
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/login">登录</a></li>
+                <li><a href="/register">注册</a></li>
+            </ul>
+            {% else %}
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    {% if user1 is not None %}
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false">{{ user1.username }}<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/myself">个人信息</a></li>
+                            <li><a href="/edit">修改个人信息</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="/logout">退出</a></li>
+                            <li><a href="/delete/?user_name={{ user1.username }}" onclick="return deleteJob();">注销</a></li>
+                        </ul>
+                    {% else %}
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false">{{ rt.username }}<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/logout">退出</a></li>
+                        </ul>
+                    {% endif %}
+                 </li>
+             </ul>
+            {% endif %}
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+                <div class="panel panel-default">
+                    <div class="panel-heading">商品信息</div>
+                    <div class="panel-body">
+                    {% if user1 %}
+                        {% for i in water %}
+                            <a href="/buy/?wid={{ i.wid }}">
+                                <div class="col-sm-6 col-md-3">
+                                    <div class="thumbnail">
+                                        <img src="../static/img/{{ i.wid }}.jpg" alt="...">
+                                        <div class="caption">
+                                            <h5>饮用水类型:{{ i.type }}</h5>
+                                            <p>饮用水编号:{{ i.wid }}</p>
+                                            <p>饮用水类型:{{ i.type }}</p>
+                                            <p>售价:{{ i.sell }}元</p>
+                                            <p>简介:</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        {% endfor %}
+                    {% else %}
+                        {% for i in water %}
+                            <div class="col-sm-6 col-md-3">
+                                <div class="thumbnail">
+                                    <img src="../static/img/{{ i.wid }}.jpg" alt="...">
+                                    <div class="caption">
+                                        <h5>饮用水类型:{{ i.type }}</h5>
+                                        <p>饮用水编号:{{ i.wid }}</p>
+                                        <p>饮用水类型:{{ i.type }}</p>
+                                        <p>售价:{{ i.sell }}元</p>
+                                        <p>简介:</p>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                    </div>
+                    <div class="list-group">
+                        <a href="#" class="list-group-item active">
+                            公司公告
+                        </a>
+                        <a href="#" class="list-group-item">我公司进一步成功举办研发庆祝会</a>
+                        <a href="#" class="list-group-item">招聘通知</a>
+                        <a href="#" class="list-group-item">公司与十几家公司达成合作</a>
+                        <a href="#" class="list-group-item">公司研发新产品通知</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+    </div>
+    <script>
+		function deleteJob()
+		{
+		     return confirm("确定要注销账号吗?");
+		}
+    </script>
+    {% if m %}
+        <script>
+            alert("恭喜你购买成功")
+        </script>
+    {% endif %}
+    {% if l %}
+        <script>
+            alert("保存成功")
+        </script>
+    {% endif %}
+{% endblock %}
+</body>
+</html>

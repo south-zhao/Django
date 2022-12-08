@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>注册界面</title>
+    {% load static %}
+    <script src="{% static 'js/jquery_3.6.0.js' %}"></script>
+    <script src="{% static 'bootstrap-3.4.1-dist/js/bootstrap.min.js' %}"></script>
+    <style>
+        body{
+            margin: 0;
+            padding: 0;
+        }
+        a{
+            text-decoration: none;
+        }
+        .register{
+            width: 900px;
+            height: 500px;
+            margin: 50px auto;
+            border: 3px solid #ddd;
+        }
+        .msg{
+            float: left;
+            width: 100%; /* 跟父级一样宽 */
+            height: 70px;
+            margin-top: 50px;
+            font-size: 18px;
+        }
+        .l {
+            float: left;
+            width: 150px;
+            height: 40px;
+            line-height: 40px;
+            padding-left: 30px;
+        }
+        .msg p{
+            line-height: 0;
+            text-indent: 2em; /* em字符单位.相当于缩进了2个字*/
+        }
+
+        #t {
+            float: right;
+            padding-right: 270px;
+            line-height: 45px;
+        }
+
+
+        .text{
+            float: left;
+            width: 300px;
+            height: 40px;
+            border: 2px solid #ddd;
+        }
+        .code{
+            width: 100px;
+        }
+        .btn{
+            float: left;
+            height: 44px;
+        }
+        .input-code{
+            float: left;
+            position: relative;
+            left: 90px;
+        }
+        .check{  /* 确认登录的盒子*/
+            float: left;
+            width: 300px;
+            height: 40px;
+            margin: 15px 0 0 300px; /* 距离上方和左方分别15/300像素*/
+        }
+        .accept{
+            float: left;
+            margin-top: 22px;
+        }
+        .reg{
+            text-align: center;
+            width: 300px;
+            height: 40px;
+            margin-left: 270px;
+            font-size: 20px;
+            color: #096;
+        }
+    </style>
+</head>
+<body>
+<div class="register">
+    <form action="" method="post">
+        {% csrf_token %}
+        <div class="msg">
+            <span class="l">用户名:</span>
+            <label>
+                <input type="text" name="username" placeholder="用户名" class="text">
+            </label>
+            <p>请设置用户名,请输入真实姓名</p>
+        </div>
+        <div class="msg">
+            <span class="l">密码:</span>
+            <label>
+                <input id="pwd" type="password" name="password" placeholder="密码" class="text">
+                <img src="../../static/img/show.jpg" alt="" width="45" height="45">
+            </label>
+            <span id="t">请输入密码</span>
+        </div>
+        <div class="msg">
+            <span class="l">确认密码:</span>
+            <label>
+                <input type="password" name="password1" placeholder="密码" class="text">
+            </label>
+            <p>请输入密码</p>
+        </div>
+        <div class="check">
+            <label>
+                <input type="checkbox" class="accept">
+            </label>
+            <p>
+                <a href="http://www.cxy521.com/">已阅读并同意《多喝热水》协议</a>
+            </p>
+        </div>
+        <input type="submit" value="立即注册" class="reg">
+         <p style="color: #ff0000;text-align: center">{{error}}</p>
+    </form>
+</div>
+<script>
+    $(function () {
+    // 通过点击事件实现密码的显示或隐藏功能
+    $("#pwd").next().click(function () {
+        // 通过id选择器获取当前输入框的属性
+        var type = $("#pwd").attr("type");
+        /**
+         * 若当前属性为“password”,则切换图片，并修改属性为“text”，实现密码的显示功能
+         * 若当前属性为“text"，同样切换图片，并修改属性为”password",实现密码的再次隐藏功能
+         */
+        if(type === "password"){
+            $("#pwd").next().attr("src","../../static/img/hide.jpg");
+            $("#pwd").next().css({"width":"45", "height":"45"});
+            $("#pwd").prop("type", "text");
+        }else {
+            $("#pwd").next().attr("src","../../static/img/show.jpg");
+            $("#pwd").next().css({"width":"45", "height":"45"});
+            $("#pwd").prop("type", "password");
+        }
+    });
+});
+
+</script>
+{% if msg %}
+    <script>
+        alert('{{ msg }}');
+        window.location.replace("/login");
+    </script>
+{% endif %}
+</body>
+</html>
+
+

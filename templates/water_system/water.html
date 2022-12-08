@@ -1,0 +1,34 @@
+{% extends 'water_system/index.html' %}
+{% block head %}
+<title>饮用水信息</title>
+{% endblock %}
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+                <div class="panel panel-default">
+                  <!-- Default panel contents -->
+                  <div class="panel-heading">饮用水信息表</div>
+
+                  <!-- Table -->
+                  <table class="table">
+                        <tr>
+                            <td>编号</td>
+                            <td>种类</td>
+                            <td>售价(元/桶)</td>
+                        </tr>
+                      {% for pa in water %}
+                        <tr>
+                            <td>{{ pa.wid }}</td>
+                            <td>{{ pa.type }}</td>
+                            <td>{{ pa.sell }}</td>
+                        </tr>
+                      {% endfor %}
+                  </table>
+                </div>
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+    </div>
+{% endblock %}
