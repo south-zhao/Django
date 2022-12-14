@@ -35,6 +35,7 @@ urlpatterns = [
     path('out/', views.load, name='out'),
     path('outr/', views.loadr, name='outr'),
     path('delete/', views.delete, name='delete'),
+    path('delete1/', views.delete1, name='delete1'),
 ]
 
 

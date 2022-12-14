@@ -473,7 +473,6 @@ def buy_inr(request):
     for i in na:
         li = [int(i[0]), i[1]]
         na1.append(li)
-    print(na)
     cursor.execute("SELECT wid, type FROM water")
     water = cursor.fetchall()
     water1 = []
@@ -513,13 +512,14 @@ def buy_inr(request):
                            'month': month, 'typ': typ, 'page': page, 'paginator': paginator, 'us': us, 'na': na1})
         elif year == 0 and typ == 0 and us == 0:
             infe = [i for i in infe if i.time.month == month]
+            # print(infe)
             paginator = Paginator(infe, 10)
             num_p = request.GET.get('page', 1)  # 以page为键得到默认的页面1
             page = paginator.page(int(num_p))
             return render(request, 'water_system/buinr.html',
                           {'user1': None, 'rt': rt, 'root': True, 'ase': ase, 'ye': ye, 'water1': water1, 'year': year,
                            'month': month, 'typ': typ, 'page': page, 'paginator': paginator, 'us': us, 'na': na1})
-        elif year == 0 and typ == 0 and typ == 0:
+        elif year == 0 and typ == 0 and month == 0:
             infe = [i for i in infe if i.c_id == us]
             paginator = Paginator(infe, 10)
             num_p = request.GET.get('page', 1)  # 以page为键得到默认的页面1
@@ -867,7 +867,7 @@ def delete(request):
                   {'user1': user, "rt": rt, "root": True, 'information': information})
 
 
-def delete(request):
+def delete1(request):
     edit_name = request.GET.get('user_name')
     edit_obj = models.Customer.objects.filter(name=edit_name).first()
     a = User.objects.filter(username=edit_obj.name)
