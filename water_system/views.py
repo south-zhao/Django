@@ -59,40 +59,40 @@ def get_provider(request):
     provider = Provider.objects.all()
     if user and rt is None:
         return render(request, 'water_system/provider.html',
-                      {'user1': user, "rt": None, "root": False, 'provider': provider})
+                      {'user1': user, "rt": None, "root": False, 'provider': provider, "l": False})
     elif user is None and rt:
         return render(request, 'water_system/provider.html',
-                      {'user1': None, "rt": rt, "root": True, 'provider': provider})
+                      {'user1': None, "rt": rt, "root": True, 'provider': provider, "l": False})
     else:
         return render(request, 'water_system/provider.html',
-                      {'user1': user, "rt": rt, "root": False, 'provider': provider})
+                      {'user1': user, "rt": rt, "root": False, 'provider': provider, "l": False})
 
 
 def get_store(request):
     store = models.StoreHouse.objects.all()
     if user and rt is None:
-        return render(request, 'water_system/store.html', {'user1': user, "rt": None, "root": False, 'store': store})
+        return render(request, 'water_system/store.html', {'user1': user, "rt": None, "root": False, 'store': store, "l": False})
     elif user is None and rt:
-        return render(request, 'water_system/store.html', {'user1': None, "rt": rt, "root": True, 'store': store})
+        return render(request, 'water_system/store.html', {'user1': None, "rt": rt, "root": True, 'store': store, "l": False})
     else:
-        return render(request, 'water_system/store.html', {'user1': user, "rt": rt, "root": False, 'store': store})
+        return render(request, 'water_system/store.html', {'user1': user, "rt": rt, "root": False, 'store': store, "l": False})
 
 
 def get_information(request):
     information = Customer.objects.all()
     return render(request, 'water_system/information.html',
-                  {'user1': user, "rt": rt, "root": True, 'information': information})
+                  {'user1': user, "rt": rt, "root": True, 'information': information, "l": False})
 
 
 # @checklogin
 def get_water(request):
     water = Water.objects.all()
     if user and rt is None:
-        return render(request, 'water_system/water.html', {'user1': user, "rt": rt, "root": False, 'water': water})
+        return render(request, 'water_system/water.html', {'user1': user, "rt": rt, "root": False, 'water': water, "l": False})
     elif user is None and rt:
-        return render(request, 'water_system/water.html', {'user1': user, "rt": rt, "root": True, 'water': water})
+        return render(request, 'water_system/water.html', {'user1': user, "rt": rt, "root": True, 'water': water, "l": False})
     else:
-        return render(request, 'water_system/water.html', {'user1': user, "rt": rt, "root": False, 'water': water})
+        return render(request, 'water_system/water.html', {'user1': user, "rt": rt, "root": False, 'water': water, "l": False})
 
 
 def register(request):
@@ -116,18 +116,23 @@ def register(request):
 
 def login(request):
     water = Water.objects.all()
+    useq = User.objects.all()
+    name = [i.username for i in useq]
     if request.method == "POST":
         global user, rt
         username = request.POST.get('username')
         password = request.POST.get('password')
         check = request.POST.get('us')
         if check == "普通用户":
-            user = User.objects.get(username=username)
-            if user.password == password:
-                return render(request, 'water_system/index.html',
-                              {'user1': user, "rt": None, "root": False, 'water': water})
+            if username in name:
+                user = User.objects.get(username=username)
+                if user.password == password:
+                    return render(request, 'water_system/index.html',
+                                  {'user1': user, "rt": None, "root": False, 'water': water})
+                else:
+                    return HttpResponse("登陆失败，密码错误")
             else:
-                return HttpResponse("登陆失败")
+                return HttpResponse("登陆失败, 用户名不存在")
         else:
             rt = RootS.objects.get(username=username)
             if rt.password == password:
@@ -909,7 +914,8 @@ def index1(request):
             rows = sheet.nrows
             thread = Thread(target=wrdb, args=(sheet,))
             thread.start()
-            return render(request, 'water_system/index.html', {'user1': user, "rt": rt, "root": True, "l": True, "water": water})
+            return render(request, 'water_system/index.html',
+                          {'user1': user, "rt": rt, "root": True, "l": True, "water": water})
         except Exception as e:
             return HttpResponse(e)
     return render(request, 'water_system/upload.html', {'user1': user, "rt": rt, "root": True})

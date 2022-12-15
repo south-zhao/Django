@@ -40,8 +40,10 @@
                 <li><a href="/provider">供应商信息</a></li>
                 <li><a href="http://www.cxy521.com/" target="_blank">公司简介</a></li>
                 {% if root is False %}
+                    <li><a href="/buy/?wid=0">购买</a></li>
                     <li><a href="/buin/?page=1&year=0&month=0&typ=0">购买详情</a></li>
                 {% endif %}
+
             </ul>
             {% if user1 is None and rt is None %}
             <ul class="nav navbar-nav navbar-right">
